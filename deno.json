@@ -1,0 +1,32 @@
+{
+  "name": "cuacd-web",
+  "version": "0.1.0",
+  "exports": "./src/mod.ts",
+  "tasks": {
+    "test": "deno test --allow-all --no-check=remote tests/",
+    "bench": "deno run --allow-all tests/bench_decompose.ts",
+    "wasm": "bash wasm/build.sh",
+    "bundle": "deno bundle --platform browser --output demo/cuacd.bundle.js src/mod.ts",
+    "serve": "deno run --allow-net --allow-read --allow-env demo/serve.ts",
+    "smoke": "deno run --allow-all tests/demo_smoke.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "earcut": "npm:earcut@3.0.1",
+    "manifold-3d": "npm:manifold-3d@3.5.4"
+  },
+  "compilerOptions": {
+    "lib": [
+      "deno.window",
+      "deno.unstable"
+    ],
+    "strict": true
+  },
+  "lint": {
+    "rules": {
+      "exclude": [
+        "no-explicit-any"
+      ]
+    }
+  }
+}

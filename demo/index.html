@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>cuacd-web — interactive convex decomposition on WebGPU</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1c1f26; color: #e6e8ee; font: 13px system-ui, sans-serif; }
+  canvas { display: block; }
+  #status {
+    position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: min(640px, 92vw); padding: 8px 14px 10px; box-sizing: border-box;
+    background: rgba(20, 22, 28, .85); border-radius: 0 0 14px 14px; text-align: center; z-index: 5;
+    box-shadow: 0 2px 12px rgba(0,0,0,.4);
+  }
+  #status .msg { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #bar { position: relative; height: 8px; margin-top: 6px; background: #2c313b; border-radius: 4px; overflow: hidden; }
+  #fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: linear-gradient(90deg, #4db6ff, #7cf2c4); transition: width .15s linear; }
+  #phase { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: rgba(255,255,255,.18); transition: width .15s linear; }
+  #sub { font-size: 11px; color: #aab; margin-top: 4px; }
+  #hint { position: absolute; left: 12px; bottom: 10px; font-size: 12px; color: #9aa; z-index: 5; pointer-events: none; }
+  #tip { position: absolute; display: none; padding: 4px 8px; background: rgba(20,22,28,.9); border-radius: 6px; font-size: 12px; pointer-events: none; z-index: 6; }
+  .lil-gui { --width: 300px; --font-size: 12px; }
+  #drop { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(77,182,255,.15); border: 3px dashed #4db6ff; font-size: 24px; z-index: 10; pointer-events: none; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+    "manifold-3d": "https://cdn.jsdelivr.net/npm/manifold-3d@3.5.4/manifold.js"
+} }
+</script>
+</head>
+<body>
+<div id="status">
+  <div class="msg" id="msg">starting…</div>
+  <div id="bar"><div id="phase"></div><div id="fill"></div></div>
+  <div id="sub"></div>
+</div>
+<div id="tip"></div>
+<div id="hint">drag &amp; drop an OBJ / STL / PLY / GLB · with an edit tool active, click the model to apply it</div>
+<div id="drop">drop a mesh to load it</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
