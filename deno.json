@@ -15,7 +15,8 @@
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
     "earcut": "npm:earcut@3.0.1",
-    "manifold-3d": "npm:manifold-3d@3.5.4"
+    "manifold-3d": "npm:manifold-3d@3.5.4",
+    "@deno/dnt": "jsr:@deno/dnt@0.42.3"
   },
   "compilerOptions": {
     "lib": [

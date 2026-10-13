@@ -1,6 +1,6 @@
 // Build the npm package in ./npm with @deno/dnt (ESM + type declarations).
 //   deno run -A scripts/build_npm.ts [version]
-import { build, emptyDir } from "jsr:@deno/dnt@0.42.3";
+import { build, emptyDir } from "@deno/dnt";
 
 const version = Deno.args[0] ?? "0.1.0";
 const WEBGPU_TYPES = "0.1.68";

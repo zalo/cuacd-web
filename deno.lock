@@ -464,6 +464,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@deno/dnt@0.42.3",
       "jsr:@std/assert@1",
       "npm:earcut@3.0.1",
       "npm:manifold-3d@3.5.4"
