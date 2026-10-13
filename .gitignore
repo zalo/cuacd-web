@@ -1,3 +1,5 @@
 demo/cuacd.bundle.js
 demo/_smoke.html
 node_modules/
+npm/
+.npm-src/

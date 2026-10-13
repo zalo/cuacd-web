@@ -11,4 +11,9 @@ jobs:
       - run: deno check src/mod.ts tests/*.ts
       - run: deno lint
       - run: deno task bundle
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the npm package and exercise its CPU path from Node
+        run: deno task npm && deno task npm:test
       # the GPU test suite needs a WebGPU adapter; run `deno task test` locally

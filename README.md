@@ -66,8 +66,14 @@ deno task bundle && deno task serve      # http://localhost:8000/
 
 ## Using the library
 
+From Deno or a browser import map, import `src/mod.ts`; from npm, the package
+`cuacd-web` (ESM only, built with [dnt](https://github.com/denoland/dnt) by
+`deno task npm`; it ships type declarations and depends on `earcut` and
+`@webgpu/types`):
+
 ```ts
-import { decompose, parseOBJ } from "./src/mod.ts";
+import { decompose, parseOBJ } from "cuacd-web";   // npm
+import { decompose, parseOBJ } from "./src/mod.ts"; // Deno / source
 
 const mesh = parseOBJ(await Deno.readTextFile("model.obj")); // closed mesh
 const result = await decompose(mesh, { threshold: 0.1 });
@@ -83,7 +89,11 @@ level, multiple of 3), `width2`, `depth`, `maxNCutting`, `nConcaveEdges`,
 `concaveEps`, `concaveThreshold`, `concaveIters`. Extras: `refineRounds` /
 `refineProbes` (plane refinement), `mergeHulls` / `mergeRounds` (hull
 merging, on by default), `signal` (an `AbortSignal`), `onProgress`,
-`profile` (per-kernel GPU timings), `tree` (pool sizes). Input must be closed;
+`profile` (per-kernel GPU timings), `tree` (pool sizes). The library needs a
+WebGPU device: browsers (Chrome, Edge), Deno, or Node with Dawn's `webgpu`
+bindings installed and exposed as `navigator.gpu` (`scripts/test_npm.mjs`
+shows how); the CPU helpers (`planeCut`, `convexHull`, `isClosed`, …) run
+anywhere. Input must be closed;
 set `requireClosed: false` to try anyway. There is no voxel remeshing
 preprocess yet: repair or remesh open meshes first (the demo's manifold tools
 help, and `trimesh` voxel remeshing produced the sample models).
@@ -118,6 +128,7 @@ deno run --allow-all tests/bench_hull.ts         # hull kernel throughput per ph
 node --experimental-strip-types tests/validate_tint.mjs   # validate the WGSL with Dawn/Tint (Chrome's compiler)
 deno task smoke                                  # boot the page in headless Chromium
 deno task wasm                                   # rebuild wasm/qh.js (needs emsdk)
+deno task npm [version] && deno task npm:test    # build the npm package into npm/ and exercise it from Node
 ```
 
 Deno's WGSL front end (wgpu) accepts code that Chrome's (Tint) rejects, so

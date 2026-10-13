@@ -8,7 +8,9 @@
     "wasm": "bash wasm/build.sh",
     "bundle": "deno bundle --platform browser --output demo/cuacd.bundle.js src/mod.ts",
     "serve": "deno run --allow-net --allow-read --allow-env demo/serve.ts",
-    "smoke": "deno run --allow-all tests/demo_smoke.ts"
+    "smoke": "deno run --allow-all tests/demo_smoke.ts",
+    "npm": "deno run -A scripts/build_npm.ts",
+    "npm:test": "node scripts/test_npm.mjs"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
