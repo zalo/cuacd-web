@@ -153,7 +153,7 @@ class App {
       example: "bunny (voxel remesh)",
       threshold: 0.1, width: 30, concaveEdges: 16, maxIters: 100, mergeHulls: true, refineRounds: 2,
       autoRun: true,
-      tool: "none", shape: "sphere", size: 0.35, twist: 0,
+      tool: "subtract", shape: "sphere", size: 0.35, twist: 0,
       show: "hulls", explode: 0, opacity: 1, showInput: false,
     };
     this.buildGui();

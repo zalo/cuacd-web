@@ -180,3 +180,12 @@ uses [three.js](https://threejs.org) (MIT). The demo's structure follows
 
 This repository is licensed under the GNU Lesser General Public License v2.1,
 the licence of the CUDA implementation it ports.
+
+What the LGPL means in practice for a JavaScript dependency: your application
+can be under any licence, open or closed, but changes you make to cuacd-web
+itself must be released under the LGPL, and users of your application must
+be able to replace the library with their own build. Keeping it as a
+separately replaceable module (for example an unminified chunk of its own, or
+one you can point users at) satisfies that; inlining a modified copy into an
+opaque bundle does not. This is a summary, not legal advice: see the LICENSE
+file.
