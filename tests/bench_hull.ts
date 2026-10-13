@@ -9,7 +9,7 @@ import { type Mesh, nv, parseOBJ, normalize, bbox } from "../src/mesh.ts";
 
 const file = Deno.args[0] ?? "/tmp/meshes/bunny_vox64.obj";
 const { device } = await getDevice();
-let mesh = normalize(parseOBJ(await Deno.readTextFile(file))).mesh;
+const mesh = normalize(parseOBJ(await Deno.readTextFile(file))).mesh;
 const pieces: Mesh[] = [mesh];
 // halve repeatedly along the longest axis to get pieces of decreasing size
 for (let k = 0; k < 7; k++) {
