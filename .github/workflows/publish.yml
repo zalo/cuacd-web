@@ -1,0 +1,37 @@
+# Publishes the npm package through npm trusted publishing (OIDC): no tokens or
+# one-time codes. Configure once on npmjs.com → package → Settings → Trusted
+# publisher: owner "zalo", repository "cuacd-web", workflow "publish.yml".
+# Then publish by pushing a tag like v0.1.1 (the tag sets the version).
+name: Publish to npm
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: version to publish (e.g. 0.1.1)
+        required: true
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.9.6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Build the package
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          if [ -z "$VERSION" ]; then VERSION="${GITHUB_REF_NAME#v}"; fi
+          deno task npm "$VERSION"
+          node scripts/test_npm.mjs
+      - name: Publish
+        run: npm publish --access public --provenance
+        working-directory: npm
