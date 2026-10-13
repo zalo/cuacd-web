@@ -27,6 +27,10 @@
       "exclude": [
         "no-explicit-any"
       ]
-    }
+    },
+    "exclude": [
+      "wasm/",
+      "demo/cuacd.bundle.js"
+    ]
   }
 }
