@@ -571,7 +571,7 @@ export class GpuTree {
     };
     stages.forEach((st, si) => {
       if (si > 0) enc.copyBufferToBuffer(this.ctrInit, 0, this.ctr, 0, 16);
-      let pass = prof ? null : enc.beginComputePass();
+      const pass = prof ? null : enc.beginComputePass();
       const kernel = (name: string, body: (p: GPUComputePassEncoder) => void) => {
         if (prof) { const p = beginPass(name); body(p); p.end(); } else body(pass!);
       };

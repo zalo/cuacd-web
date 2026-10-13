@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v2
         with:
-          deno-version: v2.x
+          deno-version: v2.9.6
       - run: deno check src/mod.ts tests/*.ts
       - run: deno lint
       - run: deno task bundle
