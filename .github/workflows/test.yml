@@ -14,6 +14,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Build the npm package and exercise its CPU path from Node
-        run: deno task npm && deno task npm:test
+      - name: Rebuild the npm package and check that the committed dist/ is current
+        run: deno task npm && git diff --exit-code -- dist package.json
+      - name: Install the package from a git checkout the way npm does and exercise it from Node
+        run: |
+          mkdir -p /tmp/consumer && cd /tmp/consumer && npm init -y >/dev/null
+          npm install "git+file://$GITHUB_WORKSPACE"
+          node "$GITHUB_WORKSPACE/scripts/test_npm.mjs" cuacd-web
       # the GPU test suite needs a WebGPU adapter; run `deno task test` locally

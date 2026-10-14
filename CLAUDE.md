@@ -17,7 +17,7 @@ node --experimental-strip-types tests/validate_tint.mjs   # Tint/Dawn validation
 deno task bundle && deno task serve              # demo on http://localhost:8000/ (bundle is generated, git-ignored)
 deno task smoke                                  # headless-Chromium boot check of the demo page (no GPU needed)
 deno task wasm                                   # rebuild wasm/qh.js (needs emsdk)
-deno task npm [version] && deno task npm:test    # dnt build of the npm package (npm/, git-ignored) + Node check
+deno task npm [version] && deno task npm:test    # dnt build of the npm package into dist/ (committed!) + Node check
 ```
 
 `tests/gpu_hull_real.test.ts` and `tests/cut_regress.test.ts` are opt-in and read `/tmp/meshes/`
@@ -37,6 +37,10 @@ deno task npm [version] && deno task npm:test    # dnt build of the npm package 
 - Output hulls go through `cleanHullFaces`; hull *volumes* for the cost model come from the GPU kernel.
 - Decomposition is not bit-reproducible run to run; tests assert on aggregates (part-count ranges,
   volume, costs under the threshold, closedness), never exact geometry.
+- The npm package installs from GitHub (`npm install github:zalo/cuacd-web`): `dist/` and the root
+  `package.json` are build outputs that are committed, so rebuild them (`deno task npm`) and commit
+  them with every change under `src/` or `wasm/`; CI fails if they are stale. Edit `scripts/build_npm.ts`,
+  not `package.json`.
 - The npm build (`scripts/build_npm.ts`) prepends a `@webgpu/types` reference to a copy of the sources
   (Deno has WebGPU types built in, tsc does not), skips dnt's type check (its own import.meta polyfill
   fails under @types/node), keeps that polyfill at runtime for the Emscripten module but drops its

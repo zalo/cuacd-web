@@ -1,9 +1,14 @@
 // Exercise the built npm package from Node: the CPU path always, the GPU path
 // when Dawn's `webgpu` npm package is available (DAWN_NODE_DIR, default /tmp/dawn_node).
-//   node scripts/test_npm.mjs
+//   node scripts/test_npm.mjs              # the package in this repository (dist/)
+//   node scripts/test_npm.mjs cuacd-web    # an installed package, resolved from the cwd
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
-const pkg = await import(pathToFileURL(new URL("../npm/esm/src/mod.js", import.meta.url).pathname).href);
+const spec = process.argv[2]
+  ? createRequire(pathToFileURL(process.cwd() + "/").href).resolve(process.argv[2])
+  : new URL("../dist/esm/src/mod.js", import.meta.url).pathname;
+console.log(`testing ${spec}`);
+const pkg = await import(pathToFileURL(spec).href);
 const { planeCut, convexHull, initHull, isClosed, volume, concaveEdgePlanes, unitCube, lShape, decompose } = pkg;
 
 // --- CPU path

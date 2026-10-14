@@ -10,7 +10,7 @@
     "serve": "deno run --allow-net --allow-read --allow-env demo/serve.ts",
     "smoke": "deno run --allow-all tests/demo_smoke.ts",
     "npm": "deno run -A scripts/build_npm.ts",
-    "npm:test": "node scripts/test_npm.mjs"
+    "npm:test": "npm install --no-package-lock --no-audit --no-fund && node scripts/test_npm.mjs"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
@@ -33,7 +33,9 @@
     },
     "exclude": [
       "wasm/",
+      "dist/",
       "demo/cuacd.bundle.js"
     ]
-  }
+  },
+  "nodeModulesDir": "none"
 }

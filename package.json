@@ -1,0 +1,52 @@
+{
+  "name": "cuacd-web",
+  "version": "0.1.0",
+  "description": "Approximate convex decomposition on WebGPU: a TypeScript + WGSL port of CuACD / CoACD",
+  "license": "LGPL-2.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zalo/cuacd-web.git"
+  },
+  "homepage": "https://zalo.github.io/cuacd-web/",
+  "bugs": {
+    "url": "https://github.com/zalo/cuacd-web/issues"
+  },
+  "keywords": [
+    "convex decomposition",
+    "webgpu",
+    "coacd",
+    "collision",
+    "mesh",
+    "three.js"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@webgpu/types": "^0.1.68",
+    "earcut": "3.0.1"
+  },
+  "devDependencies": {
+    "@types/earcut": "^3.0.0",
+    "@types/node": "^20"
+  },
+  "module": "./dist/esm/src/mod.js",
+  "types": "./dist/types/src/mod.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/src/mod.d.ts",
+      "import": "./dist/esm/src/mod.js",
+      "default": "./dist/esm/src/mod.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node scripts/test_npm.mjs"
+  }
+}

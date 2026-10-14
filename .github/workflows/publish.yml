@@ -1,11 +1,11 @@
-# Publishes the npm package through npm trusted publishing (OIDC): no tokens or
-# one-time codes. Configure once on npmjs.com → package → Settings → Trusted
-# publisher: owner "zalo", repository "cuacd-web", workflow "publish.yml".
-# Then publish by pushing a tag like v0.1.1 (the tag sets the version).
-name: Publish to npm
+# Optional: publishes to the npm registry through trusted publishing (OIDC),
+# no tokens or one-time codes. The package is primarily installed from GitHub
+# (npm install github:zalo/cuacd-web) so this is manual only. To use it,
+# configure once on npmjs.com → package → Settings → Trusted publisher:
+# owner "zalo", repository "cuacd-web", workflow "publish.yml", then run it
+# from the Actions tab with the version to publish.
+name: Publish to npm (manual)
 on:
-  push:
-    tags: ["v*"]
   workflow_dispatch:
     inputs:
       version:
@@ -28,10 +28,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: Build the package
         run: |
-          VERSION="${{ github.event.inputs.version }}"
-          if [ -z "$VERSION" ]; then VERSION="${GITHUB_REF_NAME#v}"; fi
-          deno task npm "$VERSION"
+          deno task npm "${{ github.event.inputs.version }}"
           node scripts/test_npm.mjs
       - name: Publish
         run: npm publish --access public --provenance
-        working-directory: npm

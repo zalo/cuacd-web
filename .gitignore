@@ -3,3 +3,5 @@ demo/_smoke.html
 node_modules/
 npm/
 .npm-src/
+dist/node_modules/
+package-lock.json
